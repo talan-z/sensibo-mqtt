@@ -70,7 +70,7 @@ async function poll() {
         id,
         ...acState,
         ...connectionStatus,
-        smartModeEnabled: smartMode.enabled
+        smartModeEnabled: (smartMode && smartMode.enabled) || false
       };
 
       service.send("status/" + id, flattened);
