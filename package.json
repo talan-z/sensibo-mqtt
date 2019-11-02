@@ -1,0 +1,23 @@
+{
+  "name": "sensibo-mqtt",
+  "version": "0.1.0",
+  "description": "Publish status/state of Sensibo devices, and allow setting state over MQTT",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/denwilliams/sensibo-mqtt.git"
+  },
+  "author": "Den Williams",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/denwilliams/sensibo-mqtt/issues"
+  },
+  "homepage": "https://github.com/denwilliams/sensibo-mqtt#readme",
+  "dependencies": {
+    "got": "^9.6.0",
+    "mqtt-usvc": "^1.0.6"
+  }
+}

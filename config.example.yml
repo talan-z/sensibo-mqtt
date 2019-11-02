@@ -1,0 +1,6 @@
+mqtt:
+  uri: mqtt://localhost
+  prefix: sensibo/
+service:
+  pollInterval: 60000
+  apiKey: changeme
