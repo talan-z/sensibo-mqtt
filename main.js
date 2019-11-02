@@ -14,21 +14,13 @@ if (apiKey === "changeme") {
   process.exit(1);
 }
 
-service.on("message", async (topic, data) => {
-  try {
-    console.log("message", topic);
-    if (!topic.startsWith("set/")) return;
-
-    const [_, deviceId, action, property] = topic.split("/");
-    if (action !== "acState") {
-      throw new Error("Only acState is supported");
-    }
-
-    console.info("SET DEVICE", deviceId, action, property, data);
+const handlers = {
+  acState: async (deviceId, property, data) => {
+    console.info("Setting AC state", deviceId, property, data);
 
     let url = `https://home.sensibo.com/api/v2/pods/${deviceId}/acStates`;
     let method = "post";
-    let body = data;
+    let body = { acState: data };
     if (property) {
       url += "/" + property;
       method = "patch";
@@ -36,7 +28,28 @@ service.on("message", async (topic, data) => {
     }
     url += "?apiKey=" + apiKey;
 
-    got(url, { json: true, body, method });
+    await got(url, { json: true, body, method });
+  },
+  smartmode: async (deviceId, property, data) => {
+    await got.put(
+      `https://home.sensibo.com/api/v2/pods/${deviceId}/smartmode&apiKey=${apiKey}`,
+      { json: true, body: { enabled: data } }
+    );
+  }
+};
+
+service.on("message", async (topic, data) => {
+  try {
+    console.log("message", topic);
+    if (!topic.startsWith("set/")) return;
+
+    const [_, deviceId, action, property] = topic.split("/");
+    const handler = handlers[action];
+    if (!handler) {
+      throw new Error(action + " is not supported");
+    }
+
+    await handler(deviceId, property, data);
   } catch (err) {
     console.error(String(err));
   }
