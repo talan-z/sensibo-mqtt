@@ -11,4 +11,4 @@ You can change AC state sending to `sensibo/set/{device_id}/acState` [see post d
 Eg, send to:
 
 - topic = `sensibo/set/Abcd123/acState/on`
-- value = `true`
+- value = `{"newValue": true}`
