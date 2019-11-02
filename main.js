@@ -59,18 +59,26 @@ service.on("message", async (topic, data) => {
 async function poll() {
   try {
     const response = await got(
-      "https://home.sensibo.com/api/v2/users/me/pods?fields=id,acState,connectionStatus,smartMode&apiKey=" +
+      "https://home.sensibo.com/api/v2/users/me/pods?fields=id,acState,connectionStatus,smartMode,measurements&apiKey=" +
         apiKey,
       { json: true }
     );
 
     response.body.result.map(device => {
-      const { id, acState, connectionStatus, smartMode } = device;
+      const {
+        id,
+        acState,
+        connectionStatus,
+        smartMode = {},
+        measurements = {}
+      } = device;
       const flattened = {
         id,
         ...acState,
         ...connectionStatus,
-        smartModeEnabled: (smartMode && smartMode.enabled) || false
+        smartModeEnabled: smartMode.enabled || false,
+        temperature: measurements.temperature,
+        humidity: measurements.humidity
       };
 
       service.send("status/" + id, flattened);
