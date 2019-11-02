@@ -58,14 +58,19 @@ service.on("message", async (topic, data) => {
 setInterval(async () => {
   try {
     const response = await got(
-      "https://home.sensibo.com/api/v2/users/me/pods?fields=id,acState,connectionStatus&apiKey=" +
+      "https://home.sensibo.com/api/v2/users/me/pods?fields=id,acState,connectionStatus,smartMode&apiKey=" +
         apiKey,
       { json: true }
     );
 
     response.body.result.map(device => {
-      const { id, acState, connectionStatus } = device;
-      const flattened = { id, ...acState, ...connectionStatus };
+      const { id, acState, connectionStatus, smartMode } = device;
+      const flattened = {
+        id,
+        ...acState,
+        ...connectionStatus,
+        smartModeEnabled: smartMode.enabled
+      };
 
       service.send("status/" + id, flattened);
     });
