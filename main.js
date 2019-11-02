@@ -31,9 +31,9 @@ const handlers = {
     await got(url, { json: true, body, method });
   },
   smartmode: async (deviceId, property, data) => {
-    await got.put(
-      `https://home.sensibo.com/api/v2/pods/${deviceId}/smartmode&apiKey=${apiKey}`,
-      { json: true, body: { enabled: data } }
+    await got(
+      `https://home.sensibo.com/api/v2/pods/${deviceId}/smartmode?apiKey=${apiKey}`,
+      { json: true, method: "put", body: { enabled: data } }
     );
   }
 };
