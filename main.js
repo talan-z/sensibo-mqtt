@@ -50,12 +50,13 @@ service.on("message", async (topic, data) => {
     }
 
     await handler(deviceId, property, data);
+    await poll();
   } catch (err) {
     console.error(String(err));
   }
 });
 
-setInterval(async () => {
+async function poll() {
   try {
     const response = await got(
       "https://home.sensibo.com/api/v2/users/me/pods?fields=id,acState,connectionStatus,smartMode&apiKey=" +
@@ -77,6 +78,8 @@ setInterval(async () => {
   } catch (err) {
     console.error(String(err));
   }
-}, pollInterval);
+}
+
+setInterval(poll, pollInterval);
 
 service.subscribe("set/#");
