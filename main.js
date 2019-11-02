@@ -28,13 +28,15 @@ service.on("message", async (topic, data) => {
 
     let url = `https://home.sensibo.com/api/v2/pods/${deviceId}/acStates`;
     let method = "post";
+    let body = data;
     if (property) {
       url += "/" + property;
       method = "patch";
+      body = { newValue: data };
     }
     url += "?apiKey=" + apiKey;
 
-    got(url, { json: true, body: data, method });
+    got(url, { json: true, body, method });
   } catch (err) {
     console.error(String(err));
   }
