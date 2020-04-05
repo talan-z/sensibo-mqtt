@@ -69,14 +69,14 @@ async function poll() {
         id,
         acState,
         connectionStatus,
-        smartMode = {},
+        smartMode,
         measurements = {}
       } = device;
       const flattened = {
         id,
         ...acState,
         ...connectionStatus,
-        smartModeEnabled: smartMode.enabled || false,
+        smartModeEnabled: (smartMode && smartMode.enabled) || false,
         temperature: measurements.temperature,
         humidity: measurements.humidity
       };
