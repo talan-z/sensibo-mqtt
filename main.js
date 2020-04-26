@@ -5,7 +5,7 @@ const mqttusvc = require("mqtt-usvc");
 const got = require("got");
 
 async function main() {
-  const service = mqttusvc.create();
+  const service = await mqttusvc.create();
   const { apiKey, pollInterval = 60000 } = service.config;
   if (!apiKey) {
     console.error("No API Key");
