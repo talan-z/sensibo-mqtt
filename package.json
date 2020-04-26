@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/denwilliams/sensibo-mqtt#readme",
   "dependencies": {
-    "got": "^9.6.0",
+    "got": "^11.0.2",
     "mqtt-usvc": "^2.2.1"
   }
 }
