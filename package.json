@@ -21,6 +21,7 @@
   "homepage": "https://github.com/denwilliams/sensibo-mqtt#readme",
   "dependencies": {
     "got": "^11.0.2",
-    "mqtt-usvc": "^3.0.2"
+    "mqtt-usvc": "^3.0.2",
+    "prom-client": "^12.0.0"
   }
 }
