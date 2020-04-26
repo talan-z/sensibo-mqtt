@@ -91,4 +91,4 @@ async function poll() {
 
 setInterval(poll, pollInterval);
 
-service.subscribe("set/#");
+service.subscribe("~/set/#");
