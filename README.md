@@ -23,3 +23,7 @@ or
 
 - topic = `sensibo/set/Abcd123/acState`
 - value = `{"on"true,"mode":"cool","fanLevel":"auto","targetTemperature":22}`
+
+## HTTP Status
+
+To enable set a http port in the config (see example), then poll /status on that port.
