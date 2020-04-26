@@ -1,6 +1,6 @@
 {
   "name": "sensibo-mqtt",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Publish status/state of Sensibo devices, and allow setting state over MQTT",
   "main": "main.js",
   "scripts": {
