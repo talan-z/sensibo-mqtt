@@ -61,11 +61,10 @@ async function poll() {
   try {
     const response = await got(
       "https://home.sensibo.com/api/v2/users/me/pods?fields=id,acState,connectionStatus,smartMode,measurements&apiKey=" +
-        apiKey,
-      { json: true }
+        apiKey
     );
 
-    response.body.result.map(device => {
+    JSON.parse(response.body).result.map(device => {
       const {
         id,
         acState,
@@ -85,7 +84,7 @@ async function poll() {
       service.send("status/" + id, flattened);
     });
   } catch (err) {
-    console.error(String(err));
+    console.error(String(err.stack));
   }
 }
 
