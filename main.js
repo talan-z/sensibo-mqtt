@@ -42,9 +42,9 @@ const handlers = {
 service.on("message", async (topic, data) => {
   try {
     console.log("message", topic);
-    if (!topic.startsWith("set/")) return;
+    if (!topic.startsWith("~/set/")) return;
 
-    const [_, deviceId, action, property] = topic.split("/");
+    const [, , deviceId, action, property] = topic.split("/");
     const handler = handlers[action];
     if (!handler) {
       throw new Error(action + " is not supported");
