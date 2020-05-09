@@ -82,7 +82,7 @@ async function main() {
           humidity: measurements.humidity
         };
 
-        service.send("status/" + id, flattened);
+        service.send("~/status/" + id, flattened);
       });
     } catch (err) {
       console.error(String(err.stack));
