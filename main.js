@@ -33,7 +33,7 @@ async function main() {
       //await got(url, { json: true, body, method });
 	  const body_response = await got(url, { json: body, method });
 	  
-	  console.log(body_response);
+	  //console.log(body_response);
     },
     smartmode: async (deviceId, property, data) => {
       await got(
