@@ -30,22 +30,26 @@ async function main() {
       }
       url += "?apiKey=" + apiKey;
 
-      await got(url, { json: true, body, method });
+      //await got(url, { json: true, body, method });
+	  const body_response = await got(url, { json: body, method });
+	  
+	  console.log(body_response);
     },
     smartmode: async (deviceId, property, data) => {
       await got(
         `https://home.sensibo.com/api/v2/pods/${deviceId}/smartmode?apiKey=${apiKey}`,
-        { json: true, method: "put", body: { enabled: data } }
+        { method: "put", json: { enabled: data } }
       );
     }
   };
 
   service.on("message", async (topic, data) => {
     try {
-      console.log("message", topic);
+      console.info("message", topic);
       if (!topic.startsWith("~/set/")) return;
 
       const [, , deviceId, action, property] = topic.split("/");
+  
       const handler = handlers[action];
       if (!handler) {
         throw new Error(action + " is not supported");
@@ -57,8 +61,9 @@ async function main() {
       console.error(String(err));
     }
   });
-
+  
   async function poll() {
+	//console.info("Polling...");
     try {
       const response = await got(
         "https://home.sensibo.com/api/v2/users/me/pods?fields=id,acState,connectionStatus,smartMode,measurements&apiKey=" +
@@ -81,7 +86,7 @@ async function main() {
           temperature: measurements.temperature,
           humidity: measurements.humidity
         };
-
+		//console.info("Received..."+response.body);
         service.send("~/status/" + id, flattened);
       });
     } catch (err) {
@@ -92,9 +97,12 @@ async function main() {
   setInterval(poll, pollInterval);
 
   service.subscribe("~/set/#");
+  
+  poll();
 }
 
 main().catch(err => {
-  console.err(err.stack);
+  //console.info("Error");
+  console.error(err.stack);
   process.exit(1);
 });
